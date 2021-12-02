@@ -38,7 +38,7 @@
                     console.log(JSON.stringify(parsed, null, 3))
                     const lat = parsed["latitude"]
                     const lon = parsed["longitude"]
-                    map = map.setView([lat, lon], 6)
+                    map = map.setView([lat, lon], 4)
                     let my_divicon = L.divIcon({
                         className: 'arrow_box'
                     })
