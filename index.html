@@ -24,7 +24,7 @@
             headers: {}
         })
             .then(data => data.json().then(parsed => {
-                const [lat, lon] = parsed
+                const {lat, lon} = parsed
                 let map = L.map('map').setView([lat, lon], 13)
                 let my_divicon = L.divIcon({
                     className: 'arrow_box'
