@@ -13,7 +13,7 @@
             mode: 'cors',
             headers: {}
         })
-            .then(data => console.log(data.json()))
+            .then(data => data.json().then(parsed => console.log(parsed)))
             .catch(error => console.error(error))
             
     </script>
