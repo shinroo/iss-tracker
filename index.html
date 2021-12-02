@@ -20,6 +20,8 @@
     <script>
         const intervalID = window.setInterval(myCallback, 5000);
 
+        let map;
+
         function myCallback() {
             console.log("attempting to refresh ISS data")
             fetch("https://api.wheretheiss.at/v1/satellites/25544", {
@@ -28,10 +30,13 @@
                 headers: {}
             })
                 .then(data => data.json().then(parsed => {
+                    if (map) {
+                        map.remove();
+                    }
                     console.log(JSON.stringify(parsed, null, 3))
                     const lat = parsed["latitude"]
                     const lon = parsed["longitude"]
-                    let map = L.map('map').setView([lat, lon], 6)
+                    map = L.map('map').setView([lat, lon], 6)
                     let my_divicon = L.divIcon({
                         className: 'arrow_box'
                     })
