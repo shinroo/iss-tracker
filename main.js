@@ -3,6 +3,12 @@ let marker
 let markerLayer
 let lat
 let lon
+let zoom = 4
+
+const ua = navigator.userAgent;
+if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+    zoom = 2
+}
 
 const markerRefreshIntervalID = window.setInterval(() => {
     console.log("attempting to refresh ISS data")
@@ -18,7 +24,7 @@ const markerRefreshIntervalID = window.setInterval(() => {
             console.log(JSON.stringify(parsed, null, 3))
             lat = parsed["latitude"]
             lon = parsed["longitude"]
-            map = map.setView([lat, lon], 4)
+            map = map.setView([lat, lon], zoom)
             let my_divicon = L.divIcon({
                 className: 'arrow_box'
             })
@@ -39,5 +45,5 @@ const mapRefreshIntervalID = window.setInterval(() => {
     if (map) {
         map.remove()
     }
-    map = L.map('map').setView([lat, lon], 4)
+    map = L.map('map').setView([lat, lon], zoom)
 }, 20000)
