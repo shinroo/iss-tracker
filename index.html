@@ -9,7 +9,7 @@
 <body>
     <script>
         fetch("https://api.wheretheiss.at/v1/satellites/25544")
-            .then(data => console.log(data))
+            .then(data => console.log(data.json()))
             .catch(error => console.error(error))
     </script>
 </body>
