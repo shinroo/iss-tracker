@@ -18,13 +18,13 @@
 <body>
     <div id="map" style="left:0; top:0; height:100vh; width:100vw;"></div>
     <script>
-        const intervalID = window.setInterval(myCallback, 5000)
-
         let map = L.map('map')
         let marker
         let markerLayer
+        let lat
+        let lon
 
-        function myCallback() {
+        const markerRefreshIntervalID = window.setInterval(() => {
             console.log("attempting to refresh ISS data")
             fetch("https://api.wheretheiss.at/v1/satellites/25544", {
                 method: "GET",
@@ -36,8 +36,8 @@
                         markerLayer.remove()
                     }
                     console.log(JSON.stringify(parsed, null, 3))
-                    const lat = parsed["latitude"]
-                    const lon = parsed["longitude"]
+                    lat = parsed["latitude"]
+                    lon = parsed["longitude"]
                     map = map.setView([lat, lon], 4)
                     let my_divicon = L.divIcon({
                         className: 'arrow_box'
@@ -52,8 +52,12 @@
                     
                 }))
                 .catch(error => console.error(error))
-        }
-        
+        }, 5000)
+
+        const mapRefreshIntervalID = window.setInterval(() => {
+            console.log("reloading map")
+            map = L.map('map').setView([lat, lon], 4)
+        }, 20000)
     </script>
 </body>
 
