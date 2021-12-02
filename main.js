@@ -36,5 +36,8 @@ const markerRefreshIntervalID = window.setInterval(() => {
 
 const mapRefreshIntervalID = window.setInterval(() => {
     console.log("reloading map")
+    if (map) {
+        map.remove()
+    }
     map = L.map('map').setView([lat, lon], 4)
 }, 20000)
