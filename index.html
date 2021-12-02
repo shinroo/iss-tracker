@@ -8,9 +8,14 @@
 </head>
 <body>
     <script>
-        fetch("https://api.wheretheiss.at/v1/satellites/25544")
+        fetch("https://api.wheretheiss.at/v1/satellites/25544", {
+            method : "GET",
+            mode: 'cors',
+            headers: {}
+        })
             .then(data => console.log(data.json()))
             .catch(error => console.error(error))
+            
     </script>
 </body>
 </html>
