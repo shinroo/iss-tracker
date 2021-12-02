@@ -18,30 +18,36 @@
 <body>
     <div id="map" style="height:100vh; width:100vw;"></div>
     <script>
-        fetch("https://api.wheretheiss.at/v1/satellites/25544", {
-            method: "GET",
-            mode: 'cors',
-            headers: {}
-        })
-            .then(data => data.json().then(parsed => {
-                const lat = parsed["latitude"]
-                const lon = parsed["longitude"]
-                let map = L.map('map').setView([lat, lon], 6)
-                let my_divicon = L.divIcon({
-                    className: 'arrow_box'
-                })
-                let marker = L.marker([lat, lon], {
-                    draggable:true
-                })
-                L.tileLayer(
-                    'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        'attribution': 'Map data, copyright <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                    }
-                ).addTo(map)
-                marker.addTo(map)
-            }))
-            .catch(error => console.error(error))
+        const intervalID = window.setInterval(myCallback, 5000);
 
+        function myCallback() {
+            fetch("https://api.wheretheiss.at/v1/satellites/25544", {
+                method: "GET",
+                mode: 'cors',
+                headers: {}
+            })
+                .then(data => data.json().then(parsed => {
+                    const lat = parsed["latitude"]
+                    const lon = parsed["longitude"]
+                    let map = L.map('map').setView([lat, lon], 6)
+                    let my_divicon = L.divIcon({
+                        className: 'arrow_box'
+                    })
+                    let markerLayer = L.marker([lat, lon], {
+                        draggable:true
+                    }).addTo(map)
+                    L.tileLayer(
+                        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            'attribution': 'Map data, copyright <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                        }
+                    ).addTo(map)
+
+                    // Will execute myCallback every 0.5 seconds 
+                    
+                }))
+                .catch(error => console.error(error))
+        }
+        
     </script>
 </body>
 
