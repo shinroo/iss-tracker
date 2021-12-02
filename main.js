@@ -10,6 +10,13 @@ if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw
     zoom = 2
 }
 
+const issIcon = myIcon = L.icon({
+    iconUrl: 'iss.png',
+    iconSize: [38, 95],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76],
+});
+
 const markerRefreshIntervalID = window.setInterval(() => {
     console.log("attempting to refresh ISS data")
     fetch("https://api.wheretheiss.at/v1/satellites/25544", {
@@ -28,7 +35,7 @@ const markerRefreshIntervalID = window.setInterval(() => {
             let my_divicon = L.divIcon({
                 className: 'arrow_box'
             })
-            marker = L.marker([lat, lon])
+            marker = L.marker([lat, lon], {icon: issIcon})
             markerLayer = marker.addTo(map)
             L.tileLayer(
                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
