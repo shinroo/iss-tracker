@@ -18,9 +18,11 @@
 <body>
     <div id="map" style="height:100vh; width:100vw;"></div>
     <script>
-        const intervalID = window.setInterval(myCallback, 5000);
+        const intervalID = window.setInterval(myCallback, 5000)
 
-        let map;
+        let map = L.map('map')
+        let marker
+        let markerLayer
 
         function myCallback() {
             console.log("attempting to refresh ISS data")
@@ -30,19 +32,18 @@
                 headers: {}
             })
                 .then(data => data.json().then(parsed => {
-                    if (map) {
-                        map.remove();
+                    if (markerLayer) {
+                        markerLayer.remove()
                     }
                     console.log(JSON.stringify(parsed, null, 3))
                     const lat = parsed["latitude"]
                     const lon = parsed["longitude"]
-                    map = L.map('map').setView([lat, lon], 6)
+                    map = map.setView([lat, lon], 6)
                     let my_divicon = L.divIcon({
                         className: 'arrow_box'
                     })
-                    let markerLayer = L.marker([lat, lon], {
-                        draggable:true
-                    }).addTo(map)
+                    marker = L.marker([lat, lon])
+                    markerLayer = marker.addTo(map)
                     L.tileLayer(
                         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             'attribution': 'Map data, copyright <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
